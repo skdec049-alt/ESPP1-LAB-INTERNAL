@@ -29,7 +29,7 @@ def get_unique_sequences(total_rolls=60):
 
 def main():
     st.set_page_config(page_title="Roll Number Portal", layout="centered")
-    st.title("🔢 Unique Number Portal")
+    st.title("🔢 SELECT YOUR PROGRAM NO")
     
     # Restrict input between 1 and 60
     roll_no = st.number_input(
