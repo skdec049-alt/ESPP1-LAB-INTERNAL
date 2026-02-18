@@ -1,27 +1,61 @@
 import streamlit as st
 import random
 
+def get_unique_sequences(total_rolls=60):
+    """
+    Generates a list of 5-number sequences for each roll number 
+    ensuring no adjacent roll numbers share a value.
+    """
+    all_numbers = list(range(1, 31))
+    assignments = {}
+    last_set = set()
+
+    # We use a fixed seed here so the entire 1-60 map is 
+    # consistent every time the app re-runs.
+    random.seed(42) 
+
+    for roll in range(1, total_rolls + 1):
+        # Find 5 numbers that do NOT intersect with the last_set
+        available = [n for n in all_numbers if n not in last_set]
+        
+        # Pick 5 from the available pool
+        current_set = random.sample(available, 5)
+        current_set.sort()
+        
+        assignments[roll] = current_set
+        last_set = set(current_set)
+        
+    return assignments
+
 def main():
-    st.title("🔢 Roll Number Result Interface")
-    st.write("Enter your roll number below to see your 5 assigned numbers.")
+    st.set_page_config(page_title="Roll Number Portal", layout="centered")
+    st.title("🔢 Unique Number Portal")
+    
+    # Restrict input between 1 and 60
+    roll_no = st.number_input(
+        "Enter Roll Number (1-60)", 
+        min_value=1, 
+        max_value=60, 
+        step=1
+    )
 
-    # User Input
-    roll_no = st.number_input("Enter Roll Number", min_value=1, step=1, value=1)
+    # Pre-calculate the non-overlapping map
+    data_map = get_unique_sequences(60)
 
-    if st.button("Generate My Numbers"):
-        # Seeding ensures the same roll number always gets the same 5 numbers
-        random.seed(roll_no)
+    if st.button("View My Numbers"):
+        my_numbers = data_map[roll_no]
         
-        # Generate 5 unique numbers between 1 and 30
-        results = random.sample(range(1, 31), 5)
-        results.sort()  # Optional: sorts them for better readability
-
-        st.success(f"Numbers for Roll No {roll_no}:")
+        st.write(f"### Results for Roll No: **{roll_no}**")
         
-        # Display numbers in a nice layout
+        # Displaying numbers in a clean row
         cols = st.columns(5)
-        for i, num in enumerate(results):
-            cols[i].metric(label=f"Number {i+1}", value=num)
+        for i, num in enumerate(my_numbers):
+            cols[i].metric(label=f"Value {i+1}", value=num)
+            
+        # Comparison logic for peace of mind
+        if roll_no > 1:
+            prev_numbers = data_map[roll_no - 1]
+            st.info(f"Note: These numbers are 100% different from Roll No {roll_no-1}.")
 
 if __name__ == "__main__":
     main()
