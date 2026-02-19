@@ -35,7 +35,7 @@ def main():
     roll_no = st.number_input(
         "Enter Roll Number (1-60)", 
         min_value=1, 
-        max_value=60, 
+        max_value=45, 
         step=1
     )
 
