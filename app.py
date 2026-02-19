@@ -33,9 +33,9 @@ def main():
     
     # Restrict input between 1 and 60
     roll_no = st.number_input(
-        "Enter Roll Number (1-60)", 
-        min_value=1, 
-        max_value=52, 
+        "Enter Roll Number (50-110)", 
+        min_value=50, 
+        max_value=110, 
         step=1
     )
 
