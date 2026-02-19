@@ -1,7 +1,7 @@
 import streamlit as st
 import random
 
-def get_unique_sequences(total_rolls=60):
+def get_unique_sequences(total_rolls=45):
     """
     Generates a list of 5-number sequences for each roll number 
     ensuring no adjacent roll numbers share a value.
