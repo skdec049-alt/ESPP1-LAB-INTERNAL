@@ -1,7 +1,7 @@
 import streamlit as st
 import random
 
-def get_unique_sequences(total_rolls=45):
+def get_unique_sequences(total_rolls=60):
     """
     Generates a list of 5-number sequences for each roll number 
     ensuring no adjacent roll numbers share a value.
@@ -40,7 +40,7 @@ def main():
     )
 
     # Pre-calculate the non-overlapping map
-    data_map = get_unique_sequences(60)
+    data_map = get_unique_sequences(110)
 
     if st.button("View My Numbers"):
         my_numbers = data_map[roll_no]
